@@ -64,6 +64,13 @@ class PostController extends Controller
         // Redirecting to the user's posts
         return redirect()->route('posts.index', ['user' => $user->username]);
    }
+
+   public function show(User $user, Post $post)
+   {
+       return view('posts.show', [
+           'post' => $post
+       ]);
+   }
 }
 
 

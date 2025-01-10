@@ -38,6 +38,7 @@
             Posts
         </h2>
 
+
         @if ($posts->count())
 
 
@@ -45,8 +46,8 @@
         <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             @foreach($posts as $post )
                 <div>
-                    <a>
-                        <img src="{{ asset('uploads') . '/' .  $post -> image }}" alt="Post image {{ $post -> title }}" />
+                    <a href="{{ route('posts.show', ['post' => $post, 'user' => $user]) }}">
+                        <img class="rounded-md" src="{{ asset('uploads') . '/' .  $post -> image }}" alt="Post image {{ $post -> title }}" />
                     </a>
 
                 </div>
