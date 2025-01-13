@@ -16,7 +16,7 @@ class PostController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except(['show', 'index']);
     }
 
     public function index(User $user) // User $user is a route model binding
@@ -52,9 +52,9 @@ class PostController extends Controller
         */
 
         $request->user()->posts()->create([
-            'title' => $request -> title,
-            'description' => $request -> description,
-            'image' => $request -> image,
+            'title' => $request->title,
+            'description' => $request->description,
+            'image' => $request->image,
             'user_id' => Auth::id(),
         ]);
 
@@ -63,14 +63,13 @@ class PostController extends Controller
 
         // Redirecting to the user's posts
         return redirect()->route('posts.index', ['user' => $user->username]);
-   }
+    }
 
-   public function show(User $user, Post $post)
-   {
-       return view('posts.show', [
-           'post' => $post
-       ]);
-   }
+    public function show(User $user, Post $post)
+    {
+        return view('posts.show', [
+            'post' => $post,
+            'user' => $user
+        ]);
+    }
 }
-
-
