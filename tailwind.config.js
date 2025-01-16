@@ -6,7 +6,11 @@ export default {
     "./vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php",
   ],
   theme: {
-    extend: {},
+    extend: {
+        fontFamily: {
+            sans: ['Poppins', 'sans-serif'],
+          },
+    },
   },
   plugins: [],
 }

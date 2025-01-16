@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Support\Facades\File;
 
 
 class PostController extends Controller
@@ -71,5 +72,27 @@ class PostController extends Controller
             'post' => $post,
             'user' => $user
         ]);
+    }
+
+    public function destroy(Post $post)
+    {
+        // Verificar si el usuario autenticado es el propietario del post
+        if (Auth::user()->id !== $post->user_id) {
+            return redirect()->route('posts.index', ['user' => Auth::user()->username])
+                             ->with('error', 'No tienes permiso para eliminar este post');
+        }
+
+        // Eliminar la imagen del post
+        $imagePath = public_path('uploads/' . $post->image);
+
+        if (File::exists($imagePath)) {
+            unlink($imagePath);
+        }
+
+        // Eliminar el post
+        $post->delete();
+
+        return redirect()->route('posts.index', ['user' => Auth::user()->username])
+                         ->with('success', 'Post eliminado con éxito');
     }
 }
