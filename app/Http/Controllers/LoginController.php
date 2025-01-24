@@ -28,6 +28,9 @@ class LoginController extends Controller
             return back()->with('message', 'Invalid login details');
         }
 
+        // Reescribir el nuevo password
+
+
         // Obtaining the authenticated user
         $user = Auth::user();
 
